@@ -1,71 +1,75 @@
 package org.marlisson.restwithspringboot.data.dto;
 
-import org.marlisson.restwithspringboot.exception.ResourceNotFoundException;
-import org.marlisson.restwithspringboot.model.Person;
-import org.marlisson.restwithspringboot.repository.PersonRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.io.Serializable;
+import java.util.Objects;
 
-import java.util.List;
+public class PersonDTO implements Serializable {
 
-@Service
-public class PersonDTO {
+    private static final long serialVersionUID = 1L;
 
-    private final Logger logger =  LoggerFactory.getLogger(PersonDTO.class.getName());
-    //private final AtomicLong counter = new AtomicLong();
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String gender;
 
-    @Autowired
-    PersonRepository repository;
+    public PersonDTO() {
 
-
-    public List<Person> findAll() {
-        logger.info("Finding all Person!");
-
-        return repository.findAll();
     }
 
-    public Person findById(Long id) {
-        logger.info("Finding one Person!");
-        // findById originalmente Retorna um Option do tipo Person
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+    public Long getId() {
+        return id;
     }
 
-    public Person create(Person person) {
-        logger.info("Creating one Person!");
-        return repository.save(person);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Person update(Long id, Person person) {
-        logger.info("Updating one Person!");
-        Person entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-
-        entity.setFirstName(person.getFirstName());
-        entity.setLastName(person.getLastName());
-        entity.setAddress(person.getAddress());
-        entity.setGender(person.getGender());
-
-        return repository.save(entity);
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void delete(Long id) {
-        logger.info("Deleting one Person!");
-
-        Person entity = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-        repository.delete(entity);
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    /*private Person mockPerson(int i) {
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("Firstname" + i);
-        person.setLastName("Lastname" + i);
-        person.setAddress("City" + i);
-        person.setGender("Male" + i);
-        return person;
-    }*/
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{name='" + this.firstName + "', lastName=" + this.lastName + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PersonDTO person)) return false;
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+    }
 }
