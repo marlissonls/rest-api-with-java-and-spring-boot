@@ -1,6 +1,9 @@
 package org.marlisson.restwithspringboot.services;
 
+import org.marlisson.restwithspringboot.data.dto.PersonDTO;
 import org.marlisson.restwithspringboot.exception.ResourceNotFoundException;
+import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseListObjects;
+import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseObject;
 import org.marlisson.restwithspringboot.model.Person;
 import org.marlisson.restwithspringboot.repository.PersonRepository;
 import org.slf4j.LoggerFactory;
@@ -21,25 +24,28 @@ public class PersonServices {
     PersonRepository repository;
 
 
-    public List<Person> findAll() {
+    public List<PersonDTO> findAll() {
         logger.info("Finding all Person!");
 
-        return repository.findAll();
+        //return ObjectMapper.parseListObjects(repository.findAll(), PersonDTO.class);
+        return parseListObjects(repository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonDTO findById(Long id) {
         logger.info("Finding one Person!");
-        // findById originalmente Retorna um Option do tipo Person
-        return repository.findById(id)
+        // findById originalmente Retorna um Option do tipo PersonDTO
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        return parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person person) {
+    public PersonDTO create(PersonDTO person) {
         logger.info("Creating one Person!");
-        return repository.save(person);
+        var entity = parseObject(person, Person.class);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
-    public Person update(Long id, Person person) {
+    public PersonDTO update(Long id, PersonDTO person) {
         logger.info("Updating one Person!");
         Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
@@ -49,7 +55,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(entity);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
     public void delete(Long id) {
