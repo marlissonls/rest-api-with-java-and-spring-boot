@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import org.marlisson.restwithspringboot.data.dto.PersonDTO;
+import org.marlisson.restwithspringboot.data.dto.v1.PersonDTO;
 import org.marlisson.restwithspringboot.unitetests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.data.dto;
+package org.marlisson.restwithspringboot.data.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
