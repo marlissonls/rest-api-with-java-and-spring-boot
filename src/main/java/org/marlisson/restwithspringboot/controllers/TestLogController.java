@@ -11,7 +11,7 @@ public class TestLogController {
 
     private final Logger logger =  LoggerFactory.getLogger(TestLogController.class.getName());
     //Logger do slf4j e não do utils
-    @GetMapping("/test")
+    @GetMapping("api/test/v1")
     public String testLog() {
         logger.debug("This is an DEBUG log");
         logger.info("This is an INFO log");
