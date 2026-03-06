@@ -8,7 +8,7 @@ spring:
     password: 123456789
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none # ao invés de "update", manter "none" porque agora é controlado por migrações com flyway
     properties:
       hibernate:
         #dialect: org.hibernate.dialect.MySQL8Dialect or MySQLDialect
@@ -18,5 +18,5 @@ spring:
 #spring.jpa.open-in-view
 logging:
   level:
-    root: WARN
+    root: INFO
     #br.com.erudio: DEBUG
