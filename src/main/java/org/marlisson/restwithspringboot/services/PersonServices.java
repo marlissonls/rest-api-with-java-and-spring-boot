@@ -2,28 +2,26 @@ package org.marlisson.restwithspringboot.services;
 
 import org.marlisson.restwithspringboot.controllers.PersonController;
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
+import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
 import org.marlisson.restwithspringboot.exception.ResourceNotFoundException;
-import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseListObjects;
-import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseObject;
 import org.marlisson.restwithspringboot.model.Person;
 import org.marlisson.restwithspringboot.repository.PersonRepository;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//import java.util.concurrent.atomic.AtomicLong;
-import org.slf4j.Logger;
+
+import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseListObjects;
+import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonServices {
 
     private final Logger logger =  LoggerFactory.getLogger(PersonServices.class.getName());
-    //private final AtomicLong counter = new AtomicLong();
 
     @Autowired
     PersonRepository repository;
@@ -51,6 +49,9 @@ public class PersonServices {
     }
 
     public PersonDTO create(PersonDTO person) {
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Creating one Person!");
         var entity = parseObject(person, Person.class);
         var dto =  parseObject(repository.save(entity), PersonDTO.class);
@@ -59,6 +60,9 @@ public class PersonServices {
     }
 
     public PersonDTO update(Long id, PersonDTO person) {
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Updating one Person!");
         Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
