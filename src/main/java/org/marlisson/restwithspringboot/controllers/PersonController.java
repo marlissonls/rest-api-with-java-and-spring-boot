@@ -49,7 +49,7 @@ public class PersonController {
         return service.create(person);
     }
 
-    @PutMapping(path = "/{id}",
+    @PutMapping(
         consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE,
@@ -59,11 +59,9 @@ public class PersonController {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_YAML_VALUE }
     )
-    public PersonDTO update(
-            @PathVariable Long id,
-            @RequestBody PersonDTO person) {
+    public PersonDTO update(@RequestBody PersonDTO person) {
 
-        return service.update(id, person);
+        return service.update(person);
     }
 
     @DeleteMapping(path = "/{id}")

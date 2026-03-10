@@ -80,7 +80,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
             link -> link.getRel().value().equals("update")
-                    && link.getHref().endsWith("api/person/v1/1")
+                    && link.getHref().endsWith("api/person/v1")
                     && link.getType().equals("PUT")
             ),
             "Update link for GET api/person/v1 should exist"
@@ -142,7 +142,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/person/v1/1")
+                                && link.getHref().endsWith("api/person/v1")
                                 && link.getType().equals("PUT")
                 ),
                 "Update link for GET api/person/v1 should exist"
@@ -186,7 +186,7 @@ class PersonServicesTest {
         when(repository.findById(1L)).thenReturn(Optional.of(person));
         when(repository.save(person)).thenReturn(persisted);
 
-        var result = service.update(1l, dto);
+        var result = service.update(dto);
 
         assertNotNull(result);
         assertNotNull(result.getId());
@@ -218,7 +218,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/person/v1/1")
+                                && link.getHref().endsWith("api/person/v1")
                                 && link.getType().equals("PUT")
                 ),
                 "Update link for GET api/person/v1 should exist"
@@ -242,7 +242,7 @@ class PersonServicesTest {
     void testUpdateWithNullPerson() {
         Exception exception = assertThrows(RequiredObjectIsNullException.class,
                 () -> {
-                    service.update(1l, null);
+                    service.update(null);
                 });
 
         String expectedMessage = "It is not allowed to persist a null object!";
@@ -304,7 +304,7 @@ class PersonServicesTest {
 
         assertTrue(personOne.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/person/v1/1")
+                                && link.getHref().endsWith("api/person/v1")
                                 && link.getType().equals("PUT")
                 ),
                 "Update link for GET api/person/v1 should exist"
@@ -356,7 +356,7 @@ class PersonServicesTest {
 
         assertTrue(personFour.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/person/v1/4")
+                                && link.getHref().endsWith("api/person/v1")
                                 && link.getType().equals("PUT")
                 ),
                 "Update link for GET api/person/v1 should exist"
@@ -408,7 +408,7 @@ class PersonServicesTest {
 
         assertTrue(personSeven.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("update")
-                                && link.getHref().endsWith("api/person/v1/7")
+                                && link.getHref().endsWith("api/person/v1")
                                 && link.getType().equals("PUT")
                 ),
                 "Update link for GET api/person/v1 should exist"
