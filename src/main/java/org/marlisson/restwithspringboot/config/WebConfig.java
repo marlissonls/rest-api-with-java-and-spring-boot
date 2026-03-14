@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         // Via HEADER PARAM http://localhost:8080/api/person/v1/1
         configurer.favorParameter(false)
-            .ignoreAcceptHeader(false)
+            .ignoreAcceptHeader(false) // Se mudar para false, XML terá mais prioridade sobre JSON. Se manter true, o Accept Head não será ignorado e XML será o padrão
             .useRegisteredExtensionsOnly(false)
             .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
