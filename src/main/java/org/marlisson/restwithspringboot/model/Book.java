@@ -6,14 +6,13 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,10 +23,11 @@ public class Book implements Serializable {
     private String author;
 
     @Column(name = "launch_date", nullable = false)
-    private LocalDateTime launchDate;
+    @Temporal(TemporalType.DATE)
+    private Date launchDate;
 
-    @Column(nullable = false, precision = 65, scale = 2)
-    private BigDecimal price;
+    @Column(nullable = false)
+    private Double price;
 
     @Column(nullable = false)
     private String title;
@@ -52,19 +52,19 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    public LocalDateTime getLaunchDate() {
+    public Date getLaunchDate() {
         return launchDate;
     }
 
-    public void setLaunchDate(LocalDateTime launchDate) {
+    public void setLaunchDate(Date launchDate) {
         this.launchDate = launchDate;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
