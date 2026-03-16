@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.unitetests.mapper.mocks;
+package org.marlisson.restwithspringboot.unittests.mapper.mocks;
 
 import java.util.ArrayList;
 import java.util.List;

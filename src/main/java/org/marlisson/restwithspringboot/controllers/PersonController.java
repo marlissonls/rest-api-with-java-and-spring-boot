@@ -3,7 +3,7 @@ package org.marlisson.restwithspringboot.controllers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.marlisson.restwithspringboot.controllers.docs.PersonControllerDocs;
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
-import org.marlisson.restwithspringboot.services.PersonServices;
+import org.marlisson.restwithspringboot.unittests.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

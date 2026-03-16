@@ -1,10 +1,10 @@
-package org.marlisson.restwithspringboot.services;
+package org.marlisson.restwithspringboot.unittests.services;
 
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
 import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
 import org.marlisson.restwithspringboot.model.Person;
 import org.marlisson.restwithspringboot.repository.PersonRepository;
-import org.marlisson.restwithspringboot.unitetests.mapper.mocks.MockPerson;
+import org.marlisson.restwithspringboot.unittests.mapper.mocks.MockPerson;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 

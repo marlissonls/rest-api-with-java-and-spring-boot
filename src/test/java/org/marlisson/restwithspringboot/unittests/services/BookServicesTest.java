@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.services;
+package org.marlisson.restwithspringboot.unittests.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.marlisson.restwithspringboot.data.dto.BookDTO;
 import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
 import org.marlisson.restwithspringboot.model.Book;
 import org.marlisson.restwithspringboot.repository.BookRepository;
-import org.marlisson.restwithspringboot.unitetests.mapper.mocks.MockBook;
+import org.marlisson.restwithspringboot.unittests.mapper.mocks.MockBook;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

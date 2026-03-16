@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.unitetests.mapper;
+package org.marlisson.restwithspringboot.unittests.mapper;
 import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseListObjects;
 import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
-import org.marlisson.restwithspringboot.unitetests.mapper.mocks.MockPerson;
+import org.marlisson.restwithspringboot.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

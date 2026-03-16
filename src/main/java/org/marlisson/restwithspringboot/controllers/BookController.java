@@ -3,7 +3,7 @@ package org.marlisson.restwithspringboot.controllers;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.marlisson.restwithspringboot.controllers.docs.BookControllerDocs;
 import org.marlisson.restwithspringboot.data.dto.BookDTO;
-import org.marlisson.restwithspringboot.services.BookServices;
+import org.marlisson.restwithspringboot.unittests.services.BookServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
