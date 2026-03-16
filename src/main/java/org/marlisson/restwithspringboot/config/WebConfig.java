@@ -2,14 +2,30 @@
 
 package org.marlisson.restwithspringboot.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 //import org.springframework.lang.NonNull;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${cors.originPatterns:default}") // default => site origem
+    private String corsOriginPatterns = "";
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        var allowedOrigins = corsOriginPatterns.split(",");
+        registry.addMapping("/**")
+                .allowedOrigins(allowedOrigins)
+                //.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowedMethods("*")
+                .allowCredentials(true);
+    }
+
     @Override                               //@NonNull ContentNegotiationConfigurer configurer
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         // Esse código inicial foi apagado: WebMvcConfigurer.super.configureContentNegotiation(configurer);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/person/v1")
 @Tag(name = "People", description = "Endpoints for Manging People")
@@ -20,6 +21,10 @@ public class PersonController implements PersonControllerDocs {
     public PersonServices service;
     // public PersonServices service = new PersonServices();
 
+    // Se necessário usar configuração de cors por endpoint, mas manter o controle global em application.yaml
+    //@CrossOrigin(origins = "http://localhost:8080")
+    //@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8080"})
+    //@CrossOrigin(originPatterns = )
     //@RequestMapping(method = RequestMethod.GET,
     @GetMapping(produces = {
             MediaType.APPLICATION_JSON_VALUE,
