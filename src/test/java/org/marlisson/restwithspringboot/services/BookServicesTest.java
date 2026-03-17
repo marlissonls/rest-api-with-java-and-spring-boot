@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.unittests.services;
+package org.marlisson.restwithspringboot.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

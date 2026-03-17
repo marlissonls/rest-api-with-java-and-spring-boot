@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.unittests.services;
+package org.marlisson.restwithspringboot.services;
 
 import org.marlisson.restwithspringboot.controllers.PersonController;
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;

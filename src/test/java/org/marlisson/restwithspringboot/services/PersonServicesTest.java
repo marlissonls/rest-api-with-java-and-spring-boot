@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.unittests.services;
+package org.marlisson.restwithspringboot.services;
 
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
 import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
