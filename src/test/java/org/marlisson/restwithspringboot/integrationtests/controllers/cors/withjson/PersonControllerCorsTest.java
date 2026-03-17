@@ -1,4 +1,4 @@
-package org.marlisson.restwithspringboot.integrationtests.controllers.withjson;
+package org.marlisson.restwithspringboot.integrationtests.controllers.cors.withjson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -170,18 +170,6 @@ class PersonControllerCorsTest extends AbstractIntegrationTest {
 
         assertEquals("Invalid CORS request", content);
     }
-
-    //    @Test
-    //    void update() {
-    //    }
-    //
-    //    @Test
-    //    void delete() {
-    //    }
-    //
-    //    @Test
-    //    void findAll() {
-    //    }
 
     private void mockPerson() {
         person.setFirstName("Richard");
