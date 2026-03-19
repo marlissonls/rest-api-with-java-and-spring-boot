@@ -66,7 +66,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
             link -> link.getRel().value().equals("findAll")
-                    && link.getHref().endsWith("api/person/v1")
+                    && link.getHref().contains("api/person/v1")
                     && link.getType().equals("GET")
             ),
             "FindAll link for GET api/person/v1 should exist"
@@ -128,7 +128,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/person/v1")
+                                && link.getHref().contains("api/person/v1")
                                 && link.getType().equals("GET")
                 ),
                 "FindAll link for GET api/person/v1 should exist"
@@ -204,7 +204,7 @@ class PersonServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/person/v1")
+                                && link.getHref().contains("api/person/v1")
                                 && link.getType().equals("GET")
                 ),
                 "FindAll link for GET api/person/v1 should exist"

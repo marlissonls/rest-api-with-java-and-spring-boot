@@ -1,10 +1,6 @@
 package org.marlisson.restwithspringboot.integrationtests.controllers.withyaml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -17,11 +13,11 @@ import org.junit.jupiter.api.*;
 import org.marlisson.restwithspringboot.configs.TestConfigs;
 import org.marlisson.restwithspringboot.integrationtests.controllers.withyaml.mapper.YAMLMapper;
 import org.marlisson.restwithspringboot.integrationtests.dto.PersonDTO;
+import org.marlisson.restwithspringboot.integrationtests.dto.wrappers.xmlandyaml.PagedModelPerson;
 import org.marlisson.restwithspringboot.integrationtests.testcontainers.AbstractIntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -219,6 +215,7 @@ class PersonControllerYamlTest extends AbstractIntegrationTest {
                                                 encodeContentTypeAs(MediaType.APPLICATION_YAML_VALUE, ContentType.TEXT))
                 ).spec(specification)
                 .accept(MediaType.APPLICATION_YAML_VALUE)
+                .queryParams("page", 3, "size", 12, "direction", "asc")
                 .when()
                 .get()
                 .then()
@@ -226,31 +223,31 @@ class PersonControllerYamlTest extends AbstractIntegrationTest {
                 .contentType(MediaType.APPLICATION_YAML_VALUE)
                 .extract()
                 .body()
-                .as(PersonDTO[].class, objectMapper);
+                .as(PagedModelPerson.class, objectMapper);
 
-        List<PersonDTO> people = Arrays.asList(response);
+        List<PersonDTO> people = response.getContent();
 
         PersonDTO personOne = people.get(0);
 
         assertNotNull(personOne.getId());
         assertTrue(personOne.getId() > 0);
 
-        assertEquals("Ayrton", personOne.getFirstName());
-        assertEquals("Senna", personOne.getLastName());
-        assertEquals("São Paulo - Brasil", personOne.getAddress());
+        assertEquals("Alric", personOne.getFirstName());
+        assertEquals("Mustoo", personOne.getLastName());
+        assertEquals("PO Box 92866", personOne.getAddress());
         assertEquals("Male", personOne.getGender());
-        assertTrue(personOne.getEnabled());
+        assertFalse(personOne.getEnabled());
 
         PersonDTO personFour = people.get(4);
 
         assertNotNull(personFour.getId());
         assertTrue(personFour.getId() > 0);
 
-        assertEquals("Muhamamd", personFour.getFirstName());
-        assertEquals("Ali", personFour.getLastName());
-        assertEquals("Kentucky - US", personFour.getAddress());
-        assertEquals("Male", personFour.getGender());
-        assertTrue(personFour.getEnabled());
+        assertEquals("Alyssa", personFour.getFirstName());
+        assertEquals("Birkenshaw", personFour.getLastName());
+        assertEquals("Suite 12", personFour.getAddress());
+        assertEquals("Female", personFour.getGender());
+        assertFalse(personFour.getEnabled());
     }
 
     private void mockPerson() {

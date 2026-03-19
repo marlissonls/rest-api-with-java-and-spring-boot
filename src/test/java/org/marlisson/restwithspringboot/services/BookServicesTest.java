@@ -64,7 +64,7 @@ class BookServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
             link -> link.getRel().value().equals("findAll")
-                    && link.getHref().endsWith("api/book/v1")
+                    && link.getHref().contains("api/book/v1")
                     && link.getType().equals("GET")
             ),
             "FindAll link for GET api/book/v1 should exist"
@@ -124,7 +124,7 @@ class BookServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/book/v1")
+                                && link.getHref().contains("api/book/v1")
                                 && link.getType().equals("GET")
                 ),
                 "FindAll link for GET api/book/v1 should exist"
@@ -200,7 +200,7 @@ class BookServicesTest {
 
         assertTrue(result.getLinks().stream().anyMatch(
                         link -> link.getRel().value().equals("findAll")
-                                && link.getHref().endsWith("api/book/v1")
+                                && link.getHref().contains("api/book/v1")
                                 && link.getType().equals("GET")
                 ),
                 "FindAll link for GET api/book/v1 should exist"
