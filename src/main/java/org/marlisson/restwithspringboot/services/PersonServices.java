@@ -3,8 +3,12 @@ package org.marlisson.restwithspringboot.services;
 import jakarta.transaction.Transactional;
 import org.marlisson.restwithspringboot.controllers.PersonController;
 import org.marlisson.restwithspringboot.data.dto.PersonDTO;
+import org.marlisson.restwithspringboot.exception.BadRequestException;
+import org.marlisson.restwithspringboot.exception.FileStorageException;
 import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
 import org.marlisson.restwithspringboot.exception.ResourceNotFoundException;
+import org.marlisson.restwithspringboot.file.importer.contract.FileImporter;
+import org.marlisson.restwithspringboot.file.importer.factory.FileImporterFactory;
 import org.marlisson.restwithspringboot.model.Person;
 import org.marlisson.restwithspringboot.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -18,6 +22,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
 
 import static org.marlisson.restwithspringboot.mapper.ObjectMapper.parseObject;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -30,6 +40,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    FileImporterFactory importer;
 
     @Autowired
     PagedResourcesAssembler<PersonDTO> assembler;
@@ -79,6 +92,35 @@ public class PersonServices {
         var dto =  parseObject(repository.save(entity), PersonDTO.class);
         addHateoasLinks(dto);
         return dto;
+    }
+
+    // ver sobre o porque precisava de throws exception e agora não precisa mais.
+    //public List<PersonDTO> massCreation(MultipartFile file) throws IOException {
+    public List<PersonDTO> massCreation(MultipartFile file) {
+        logger.info("Importing people from file!");
+
+        if (file.isEmpty()) throw new BadRequestException("Please set a Valid File!");
+
+        try(InputStream inputStream = file.getInputStream()) {
+            //String filename = file.getOriginalFilename();
+            String filename = Optional.ofNullable(file.getOriginalFilename())
+                    .orElseThrow(() -> new BadRequestException("File name cannot be null"));
+            FileImporter importer = this.importer.getImporter(filename);
+
+            List<Person> entities = importer.importFile(inputStream)
+                    .stream()
+                    .map(dto -> repository.save(parseObject(dto, Person.class)))
+                    .toList();
+
+            return entities.stream()
+                .map(entity -> {
+                    var dto = parseObject(entity, PersonDTO.class);
+                    addHateoasLinks(dto);
+                    return dto;
+                }).toList();
+        } catch (Exception e) {
+            throw new FileStorageException("Error processing the file!");
+        }
     }
 
     public PersonDTO update(PersonDTO person) {
@@ -142,7 +184,9 @@ public class PersonServices {
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).findAll(0, 12, "asc")).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findByName("", 0, 12, "asc")).withRel("findByName").withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(PersonController.class)).slash("massCreation").withRel("massCreation").withType("POST"));
         dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
         dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
