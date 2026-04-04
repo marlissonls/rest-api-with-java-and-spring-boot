@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Compiled files or folders ###
+*.jasper
