@@ -70,6 +70,11 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         this.enabled = enabled;
     }
 
+    public String getName() {
+        return (firstName != null ? firstName : "") +
+                (lastName != null ? " " + lastName : "");
+    }
+
     @Override
     public String toString() {
         return "Person{name='" + this.firstName + "', lastName=" + this.lastName + '}';
