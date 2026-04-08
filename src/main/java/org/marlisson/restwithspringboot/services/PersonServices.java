@@ -7,8 +7,7 @@ import org.marlisson.restwithspringboot.exception.BadRequestException;
 import org.marlisson.restwithspringboot.exception.FileStorageException;
 import org.marlisson.restwithspringboot.exception.RequiredObjectIsNullException;
 import org.marlisson.restwithspringboot.exception.ResourceNotFoundException;
-import org.marlisson.restwithspringboot.file.exporter.MediaTypes;
-import org.marlisson.restwithspringboot.file.exporter.contract.FileExporter;
+import org.marlisson.restwithspringboot.file.exporter.contract.PersonExporter;
 import org.marlisson.restwithspringboot.file.exporter.factory.FileExporterFactory;
 import org.marlisson.restwithspringboot.file.importer.contract.FileImporter;
 import org.marlisson.restwithspringboot.file.importer.factory.FileImporterFactory;
@@ -28,7 +27,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -87,8 +85,8 @@ public class PersonServices {
                 .map(person -> parseObject(person, PersonDTO.class))
                 .getContent();
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
-            return exporter.exportFile(people);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
+            return exporter.exportPeople(people);
         } catch (Exception e) {
             throw new RuntimeException("Error during file export!", e);
         }
@@ -101,7 +99,7 @@ public class PersonServices {
             .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
             return exporter.exportPerson(person);
         } catch (Exception e) {
             throw new RuntimeException("Error during file export!", e);

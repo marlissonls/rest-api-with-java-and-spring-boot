@@ -2,7 +2,7 @@ package org.marlisson.restwithspringboot.file.exporter.factory;
 
 import org.marlisson.restwithspringboot.exception.BadRequestException;
 import org.marlisson.restwithspringboot.file.exporter.MediaTypes;
-import org.marlisson.restwithspringboot.file.exporter.contract.FileExporter;
+import org.marlisson.restwithspringboot.file.exporter.contract.PersonExporter;
 import org.marlisson.restwithspringboot.file.exporter.impl.CsvExporter;
 import org.marlisson.restwithspringboot.file.exporter.impl.PdfExporter;
 import org.marlisson.restwithspringboot.file.exporter.impl.XlsxExporter;
@@ -20,7 +20,7 @@ public class FileExporterFactory {
     @Autowired
     private ApplicationContext context;
 
-    public FileExporter getExporter(String acceptHeader) throws Exception {
+    public PersonExporter getExporter(String acceptHeader) throws Exception {
         if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_XLSX_VALUE)) {
             // return new XlsxImporter(); não faz "new". usar injeção de dependência
             return context.getBean(XlsxExporter.class);
